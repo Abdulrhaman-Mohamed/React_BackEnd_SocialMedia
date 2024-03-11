@@ -5,7 +5,7 @@ const postSchema = require("../models/postSchema");
 const getPostById = async (req,res)=>{
     const {id} = req.params
     try {
-        const post = await postSchema.findById(id).populate("user","_id username personalImage");
+        const post = await postSchema.findById(id).populate("user","_id");
         if(post) return res.status(200).json({post})
 
         return res.status(404).json({message: "NOT FOUND"})
@@ -21,7 +21,7 @@ const addPost= async(req,res)=>{
     const {description , payload ,user} = req.body;
     try {
         const post = postSchema.create({description,payload,user})
-        return res.status(201).json({post})
+        return res.status(201).json({Message:"CREATED"})
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: error });
@@ -35,7 +35,7 @@ const getPosts= async(req,res)=>{
     const {page} = req.query
     try {
         if(page){
-            const posts= await postSchema.find().sort({createdDate:"desc"}).skip((page-1)*10).limit(10)
+            const posts= await postSchema.find().sort({createdDate:"desc"}).populate("user","_id username personalImage").skip((page-1)*10).limit(10)
             // console.log(posts);
             return res.status(200).json(posts)
         }
