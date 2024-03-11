@@ -68,10 +68,23 @@ const updatePost=async(req,res)=>{
     }
 }
 
+const deletelPost = async(req, res)=>{
+    const {id} = req.params
+    try {
+        const postDeleted = await postSchema.findByIdAndDelete(id);
+        if(!postDeleted) return res.status(404).json({Message:"NOT FOUND"})
+
+        return res.status(200).json({Message:"UPDATED SUCCESSFULLY"})
+    } catch (error) {
+        
+    }
+}
+
 module.exports ={
     getPostById,
     addPost,
     getPosts,
-    updatePost
+    updatePost,
+    deletelPost
 }
 
