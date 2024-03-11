@@ -2,18 +2,27 @@ const express = require("express");
 const dotenv = require("dotenv");
 dotenv.config();
 const app = express();
+const cors = require('cors');
 const connect = require("./dataBase/connectToDB");
+const User = require("./models/userSchema");
+const authRoute = require("./Routes/authRoute");
+const postRoute = require("./Routes/postRoute")
+
+
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 
-const cors = require('cors');
 app.use(cors());
-const authRoute = require("./Routes/authRoute");
+
+
 app.use("/users", authRoute);
 
+app.use("/post",postRoute)
 
-const User = require("./models/userSchema");
+
+
+
 app.get("/user", async (req, res) => {
   try {
     const users = await User.find();
@@ -37,6 +46,8 @@ app.get("/test", (req, res) => {
     message: "Hello",
   });
 });
+
+
 
 connect();
 app.listen(PORT, () => {
