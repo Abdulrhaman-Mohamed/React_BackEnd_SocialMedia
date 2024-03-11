@@ -5,7 +5,7 @@ const postSchema = require("../models/postSchema");
 const getPostById = async (req,res)=>{
     const {id} = req.params
     try {
-        const post = await postSchema.findById(id).populate("user","_id");
+        const post = await postSchema.findById(id).populate("user","_id username personalImage");
         if(post) return res.status(200).json({post})
 
         return res.status(404).json({message: "NOT FOUND"})
@@ -60,7 +60,7 @@ const updatePost=async(req,res)=>{
         const postUpdated = await postSchema.findByIdAndUpdate(id,req.body)
         if(!postUpdated) return res.status(404).json({Message:"NOT FOUND"})
 
-        return res.status(200).json(postUpdated)
+        return res.status(200).json({Message:"UPDATED SUCCESSFULLY"})
 
     } catch (error) {
         console.log(error);
