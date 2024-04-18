@@ -35,7 +35,7 @@ const getPosts= async(req,res)=>{
     const {page} = req.query
     try {
         if(page){
-            const posts= await postSchema.find().sort({createdDate:"desc"}).populate("user","_id username personalImage").skip((page-1)*10).limit(10)
+            const posts= await postSchema.find({},"-__v -createdDate").sort({createdDate:"desc"}).populate("user","_id username personalImage").skip((page-1)*10).limit(10)
             // console.log(posts);
             return res.status(200).json(posts)
         }
