@@ -20,8 +20,8 @@ const addPost= async(req,res)=>{
 
     const {description , payload ,user} = req.body;
     try {
-        const post = postSchema.create({description,payload,user})
-        return res.status(201).json({Message:"CREATED"})
+        const post = await postSchema.create({description,payload,user})
+        return res.status(201).json({Message:"CREATED",post})
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: error });
