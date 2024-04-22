@@ -10,7 +10,7 @@ const getPostById = async (req,res)=>{
 
         return res.status(404).json({message: "NOT FOUND"})
     } catch (error) {
-        
+
     }
     return res.json({Ok:"OK"})
 }
@@ -37,6 +37,21 @@ const getPosts= async(req,res)=>{
         if(page){
             const posts= await postSchema.find({},"-__v").sort({createdDate:"desc"}).populate("user","_id username personalImage").skip((page-1)*10).limit(10)
             // console.log(posts);
+            return res.status(200).json(posts)
+        }
+
+        return res.status(400).json({Message:"BAD REQUEST"})
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({Message:error})
+    }
+}
+const getPostsById = async (req,res)=>{
+    const {user , page} = req.query
+    try {
+        if(+page){
+            const posts = await postSchema.find({user},"-__v").sort({createdDate:"desc"}).populate("user","_id username personalImage").skip((page-1)*10).limit(10)
             return res.status(200).json(posts)
         }
 
@@ -76,7 +91,7 @@ const deletelPost = async(req, res)=>{
 
         return res.status(200).json({Message:"UPDATED SUCCESSFULLY"})
     } catch (error) {
-        
+
     }
 }
 
@@ -85,6 +100,7 @@ module.exports ={
     addPost,
     getPosts,
     updatePost,
-    deletelPost
+    deletelPost,
+    getPostsById
 }
 
