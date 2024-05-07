@@ -45,6 +45,13 @@ const login = async (req, res, next) => {
         email: visitor.email,
         username: visitor.username,
         gender: visitor.gender,
+        personalImage:visitor.personalImage,
+        bio:visitor.bio,
+        conutry:visitor.conutry,
+        jobTitle:visitor.jobTitle,
+        location:visitor.location,
+        relationahip:visitor.relationahip,
+        education:visitor.education
       },
       process.env.PRIVATE_KEY_TOKEN
     );
