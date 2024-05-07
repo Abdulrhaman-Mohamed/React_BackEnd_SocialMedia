@@ -24,7 +24,26 @@ const userSchema = new mongoose.Schema(
     },
     personalImage:{
       type:String
-    }
+    },
+    bio:{
+      type:String
+    },
+    conutry:{
+      type:String
+    },
+    jobTitle:{
+      type:String
+    },
+    location:{
+      type:String
+    },
+    relationahip:{
+      type:String
+    },
+    education:{
+      type:String
+    },
+
   },
   { timestamps: true }
 );
